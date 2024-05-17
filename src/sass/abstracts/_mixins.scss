@@ -1,0 +1,60 @@
+@import 'bootstrap/scss/maps';
+@import 'bootstrap/scss/mixins';
+
+$custom-theme-colors: (
+  'desactivado': $desactivado,
+  'gray10': $gray10,
+  'gray60': $gray60,
+  'gray100': $gray100,
+  'neutrals100': $neutrals100,
+  'neutrals200': $neutrals200,
+  'neutrals400': $neutrals400,
+  'neutrals500': $neutrals500,
+  'neutrals600': $neutrals600,
+  'neutrals700': $neutrals700,
+
+  'blueberry600': $blueberry600,
+
+  'red500': $red500,
+
+  'green400': $green400,
+);
+
+$theme-colors: map-merge($theme-colors, $custom-theme-colors);
+$theme-colors-rgb: map-loop($theme-colors, to-rgb, '$value');
+$utilities-colors: map-merge($utilities-colors, $theme-colors-rgb);
+$utilities-text: map-merge(
+  $utilities-colors,
+  (
+    'body': to-rgb($body-color),
+    'desactivado': to-rgb($desactivado),
+  )
+);
+$utilities-text-colors: map-loop($utilities-text, rgba-css-var, '$key', 'text');
+$utilities-bg-colors: map-loop($utilities-colors, rgba-css-var, '$key', 'bg');
+
+$utilities-border: map-merge(
+  $utilities-colors,
+  (
+    'white': to-rgb($white),
+  )
+);
+
+$utilities-border-colors: map-loop(
+  $utilities-border,
+  rgba-css-var,
+  '$key',
+  'border'
+);
+
+$utilities: (
+  'font-size': (
+    responsive: true,
+    rfs: false,
+    property: font-size,
+    class: fs,
+    values: $font-sizes,
+  ),
+);
+@import 'bootstrap/scss/utilities';
+@import 'bootstrap/scss/root';
