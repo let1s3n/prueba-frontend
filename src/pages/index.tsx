@@ -1,10 +1,16 @@
 import React from 'react';
 import Home from '@/components/templates/Home/home';
 import Head from 'next/head';
-import { GetServerSideProps } from 'next';
-import { PokemonProps } from '@/types/generalProps';
+import { GetServerSideProps, GetStaticProps } from 'next';
+import { Pokemon, PokemonSelected } from '@/types/generalProps';
 
-const index = ({ paginatedPokemonList, allPokemon }: PokemonProps) => {
+const index = ({
+  paginatedPokemonList,
+  allPokemon,
+}: {
+  paginatedPokemonList: Pokemon[];
+  allPokemon: Pokemon[];
+}) => {
   return (
     <>
       <Head>
@@ -18,7 +24,7 @@ const index = ({ paginatedPokemonList, allPokemon }: PokemonProps) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps = (async (context) => {
   const paginatedPokemonList = await fetch('https://pokeapi.co/api/v2/pokemon');
   const resPaginatedPokemonList = await paginatedPokemonList.json();
   const allPokemon = await fetch(
@@ -28,14 +34,13 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
   return {
     props: {
-      paginatedPokemonList: {
-        next: resPaginatedPokemonList.next,
-        previous: resPaginatedPokemonList.previous,
-        results: resPaginatedPokemonList.results,
-      },
+      paginatedPokemonList: resPaginatedPokemonList.results,
       allPokemon: resAllPokemon.results,
     },
   };
-};
+}) satisfies GetStaticProps<{
+  paginatedPokemonList: Pokemon[];
+  allPokemon: Pokemon[];
+}>;
 
 export default index;

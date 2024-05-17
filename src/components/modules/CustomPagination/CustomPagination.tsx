@@ -1,23 +1,61 @@
 import { Pagination } from 'react-bootstrap';
 
-const CustomPagination = () => {
+const CustomPagination = ({ currentPage, setCurrentPage, total }: any) => {
   return (
     <Pagination className="justify-content-center">
-      <Pagination.First />
-      <Pagination.Prev />
-      <Pagination.Item>{1}</Pagination.Item>
-      <Pagination.Ellipsis />
+      <Pagination.Item onClick={() => setCurrentPage(0)}>
+        Primero
+      </Pagination.Item>
+      <Pagination.Item
+        onClick={() => setCurrentPage(currentPage > 0 ? currentPage - 1 : 0)}
+        disabled={currentPage === 0}
+      >
+        Anterior
+      </Pagination.Item>
 
-      <Pagination.Item>{10}</Pagination.Item>
-      <Pagination.Item>{11}</Pagination.Item>
-      <Pagination.Item active>{12}</Pagination.Item>
-      <Pagination.Item>{13}</Pagination.Item>
-      <Pagination.Item disabled>{14}</Pagination.Item>
+      <Pagination.Item
+        onClick={() => setCurrentPage(currentPage)}
+        activeLabel=""
+        active
+      >
+        {currentPage + 1}
+      </Pagination.Item>
+      <Pagination.Item
+        onClick={() => setCurrentPage(currentPage + 1)}
+        disabled={currentPage + 1 > total}
+      >
+        {currentPage + 2}
+      </Pagination.Item>
+      <Pagination.Item
+        onClick={() => setCurrentPage(currentPage + 2)}
+        disabled={currentPage + 2 > total}
+      >
+        {currentPage + 3}
+      </Pagination.Item>
+      <Pagination.Item
+        onClick={() => setCurrentPage(currentPage + 3)}
+        disabled={currentPage + 3 > total}
+      >
+        {currentPage + 4}
+      </Pagination.Item>
+      <Pagination.Item
+        onClick={() => setCurrentPage(currentPage + 4)}
+        disabled={currentPage + 4 > total}
+      >
+        {currentPage + 5}
+      </Pagination.Item>
 
-      <Pagination.Ellipsis />
-      <Pagination.Item>{20}</Pagination.Item>
-      <Pagination.Next />
-      <Pagination.Last />
+      <Pagination.Item
+        onClick={() =>
+          setCurrentPage(currentPage < total ? currentPage + 1 : total)
+        }
+        disabled={currentPage === total}
+      >
+        Siguiente
+      </Pagination.Item>
+      <Pagination.Item onClick={() => setCurrentPage(total)}>
+        Ultimo
+      </Pagination.Item>
     </Pagination>
   );
 };

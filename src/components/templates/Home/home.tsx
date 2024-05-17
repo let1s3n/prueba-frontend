@@ -1,11 +1,18 @@
 import Pokedex from '@/components/modules/Pokedex/Pokedex';
-import { PokemonProps } from '@/types/generalProps';
+import { Pokemon, PokemonSelected } from '@/types/generalProps';
 
-const Home = ({ paginatedPokemonList, allPokemon }: PokemonProps) => {
+const Home = ({
+  paginatedPokemonList,
+  allPokemon,
+}: {
+  paginatedPokemonList: Pokemon[];
+  allPokemon: Pokemon[];
+}) => {
   return (
     <div>
       <h1>Home</h1>
       <Pokedex
+        limit={20}
         paginatedPokemonList={paginatedPokemonList}
         allPokemon={allPokemon}
       />

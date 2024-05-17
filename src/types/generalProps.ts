@@ -1,9 +1,8 @@
-export type PokemonProps = {
-  paginatedPokemonList: { next: string; previous: string; results: [] };
-  allPokemon: [];
-};
-
 export type Pokemon = { name: string; url: string };
+export type PokemonProps = {
+  paginatedPokemonList: Pokemon[];
+  allPokemon: Pokemon[];
+};
 
 export type PokemonSelected = {
   abilities: [];
@@ -22,7 +21,7 @@ export type PokemonSelected = {
   past_abilities: [];
   past_types: [];
   species: {};
-  sprites: {front_default:string};
+  sprites: { front_default: string };
   stats: [];
   types: [];
   weight: number;
