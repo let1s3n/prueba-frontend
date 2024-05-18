@@ -19,8 +19,11 @@ const Pokedex = ({
     allPokemon.slice(0, limit)
   );
   const [searchTerm, setSearchTerm] = useState('');
-  const [newDataSet, setNewDataSet] = useState<Pokemon[]>([]);
-  const [newDataSetLength, setNewDataSetLength] = useState(0);
+  const [newDataSet, setNewDataSet] = useState<Pokemon[]>(allPokemon);
+
+  useEffect(() => {
+    console.log('newDataSetDayana: ', newDataSet);
+  }, [newDataSet]);
 
   useEffect(() => {
     if (searchTerm === '') {
@@ -30,43 +33,36 @@ const Pokedex = ({
       );
       setCurrentPageData(newDataChunk);
     } else {
-      if (newDataSetLength > 20) {
-        if (newDataSet) {
-          let newDataChunk: Pokemon[] = newDataSet?.slice(
-            currentPage * limit,
-            currentPage * limit + limit
-          );
-          setCurrentPageData(newDataChunk);
-        }
-      }
+      dividirDataPorPagina(newDataSet);
     }
-  }, [currentPage, searchTerm]);
+  }, [currentPage, searchTerm, newDataSet]);
 
   useEffect(() => {
     setCurrentPage(0);
     if (searchTerm !== '') {
-      let newDataChunk: Pokemon[];
       const newDataSet = allPokemon.filter((pokemon) =>
         pokemon.name.includes(searchTerm)
       );
-
-      setNewDataSetLength(newDataSet.length);
-      setNewDataSet(newDataSet);
-      if (newDataSet.length > 20) {
-        newDataChunk = newDataSet.slice(
-          currentPage * limit,
-          currentPage * limit + limit
-        );
-        setCurrentPageData(newDataChunk);
-      } else {
-        setCurrentPageData(newDataSet);
+      if (newDataSet) {
+        setNewDataSet(newDataSet);
+        dividirDataPorPagina(newDataSet);
       }
     } else {
       setNewDataSet([]);
-      setNewDataSetLength(0);
     }
   }, [searchTerm]);
 
+  const dividirDataPorPagina = (newDataSet: any) => {
+    if (newDataSet.length > 20) {
+      let newDataChunk: Pokemon[] = newDataSet.slice(
+        currentPage * limit,
+        currentPage * limit + limit
+      );
+      setCurrentPageData(newDataChunk);
+    } else {
+      setCurrentPageData(newDataSet);
+    }
+  };
   const handlePokemonSelection = async (pokemonName: string) => {
     let res = await (
       await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`)
@@ -96,6 +92,7 @@ const Pokedex = ({
                   <tr
                     key={pokemon.name}
                     onClick={() => handlePokemonSelection(pokemon.name)}
+                    className={styles.mainTableItem}
                   >
                     <td>{pokemon.url.slice(34, -1)}</td>
                     <td>{pokemon.name}</td>
@@ -146,7 +143,7 @@ const Pokedex = ({
               <span>Peso:</span> {pokemonSelected?.weight}
             </p>
             <p className={styles.tableParagraph}>
-              <span>Ubicación de áreas de encuentro:</span>
+              <span>Ubicación:</span>
 
               {`
               - ${pokemonSelected?.location_area_encounters}
@@ -233,12 +230,12 @@ const Pokedex = ({
         )}
       </Row>
       <Row className="mt-5">
-        {newDataSetLength > 0 ? (
-          newDataSetLength > 20 ? (
+        {newDataSet.length > 0 ? (
+          newDataSet.length > 20 ? (
             <CustomPagination
               currentPage={currentPage}
               setCurrentPage={setCurrentPage}
-              total={Math.ceil(newDataSetLength / limit) - 1}
+              total={Math.ceil(newDataSet.length / limit) - 1}
             />
           ) : null
         ) : allPokemon.length > 20 ? (

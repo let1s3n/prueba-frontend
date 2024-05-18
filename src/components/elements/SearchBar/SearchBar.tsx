@@ -12,31 +12,40 @@ const SearchBar = ({
   newDataSet,
   setSearchTerm,
 }: {
-  newDataSet: Pokemon[] | undefined;
+  newDataSet: Pokemon[];
   setSearchTerm: Dispatch<SetStateAction<string>>;
 }) => {
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [searchInputValue, setSearchInputValue] = useState('');
 
   useEffect(() => {
-    setSearchTerm(searchInputValue);
-  }, [searchInputValue]);
+    setSearchTerm(searchInputValue.toLowerCase());
 
-  const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchInputValue(e.target.value);
-    setSearchTerm(e.target.value);
-    if (e.target.value !== '' && newDataSet) {
+    if (searchInputValue !== '' && newDataSet.length > 0) {
+      console.log('searchInputValue: ', searchInputValue);
+      console.log('newDataSet:', newDataSet);
       let res = newDataSet.filter((item: Pokemon) =>
-        item.name.startsWith(e.target.value)
+        item.name.startsWith(searchInputValue)
       );
+
       setSuggestions(res.map((item) => item.name));
     } else {
+      console.log('searchInputValue2: ', searchInputValue);
+      console.log('newDataSet2:', newDataSet);
       setSuggestions([]);
     }
+  }, [searchInputValue]);
+
+  useEffect(() => {
+    console.log('suggestions: ', suggestions);
+  }, [suggestions]);
+
+  const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchInputValue(e.target.value.toLowerCase());
   };
 
   const handleSelectSuggestion = (s: string) => {
-    setSearchInputValue(s);
+    setSearchInputValue(s.toLowerCase());
     setSuggestions([]);
   };
   return (
