@@ -2,7 +2,7 @@ import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { lato } from '@/lib/fonts';
 import '@/sass/app.scss';
-import DefaultLay from '@/components/layout/DefaultLayout/DefaultLay';
+import DefaultLayout from '@/components/layout/DefaultLayout/DefaultLayout';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -14,7 +14,7 @@ export default function App({ Component, pageProps }: AppProps) {
         />
       </Head>
       <main className={lato.className}>
-        <DefaultLay>
+        <DefaultLayout>
           <style jsx global>{`
             h1,
             h2,
@@ -26,7 +26,7 @@ export default function App({ Component, pageProps }: AppProps) {
             }
           `}</style>
           <Component {...pageProps} />
-        </DefaultLay>
+        </DefaultLayout>
       </main>
     </>
   );
