@@ -2,7 +2,7 @@ import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { lato } from '@/lib/fonts';
 import '@/sass/app.scss';
-import DefaultLayout from '@/components/layout/DefaultLayout/defaultLayout';
+import DefaultLayout from '@/components/layout/DefaultLayout/DefaultLayout';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (

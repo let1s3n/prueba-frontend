@@ -1,0 +1,26 @@
+@import '@/sass/abstracts/variables';
+@import 'bootstrap/scss/mixins';
+
+.tablaResumen {
+  position: relative;
+  z-index: 5;
+}
+.imagenPokemon {
+  position: absolute;
+  opacity: 0.2;
+  z-index: 1;
+
+  &--bulbasaur {
+    bottom: 10%;
+    left: -20%;
+  }
+  &--squirtle {
+    top: 10%;
+    left: -20%;
+  }
+  &--charmander {
+    bottom: 25%;
+    right: -20%;
+    transform: rotateY(180deg);
+  }
+}

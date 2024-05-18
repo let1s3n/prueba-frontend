@@ -75,14 +75,14 @@ const Pokedex = ({
   };
 
   return (
-    <Container className="pt-5">
-      <Row>
-        <Col xs={3}>
+    <Container className={styles.pokedexContainer + ' pt-5 position-relative'}>
+      <Row className="justify-content-center">
+        <Col xs={12} md={3}>
           <SearchBar newDataSet={newDataSet} setSearchTerm={setSearchTerm} />
         </Col>
       </Row>
-      <Row className={styles.customRow + ' column-gap-5'}>
-        <Col className="pt-5">
+      <Row className={styles.customRow}>
+        <Col xs={12} md={5} className="pt-5 position-relative">
           <Table className={styles.mainTable} hover size="sm">
             <thead>
               <tr>
@@ -104,9 +104,19 @@ const Pokedex = ({
               })}
             </tbody>
           </Table>
+          <Image
+            className={
+              styles.imagenPokemon + ' ' + styles['imagenPokemon--pikachu']
+            }
+            src="/images/pokemons/pikachuBG2.png"
+            alt="Pikachu image"
+            width={300}
+            height={0}
+            style={{ height: 'auto' }}
+          />
         </Col>
         {pokemonSelected ? (
-          <Col className={'mt-5 ' + styles.columnaDetalle}>
+          <Col xs={12} md={6} className={'mt-5 ' + styles.columnaDetalle}>
             {pokemonSelected?.sprites.front_default ? (
               <Image
                 src={pokemonSelected.sprites.front_default}
@@ -217,7 +227,7 @@ const Pokedex = ({
             </p>
           </Col>
         ) : (
-          <Col className={'mt-5 ' + styles.columnaDetalle}>
+          <Col xs={12} md={6} className={'mt-5 ' + styles.columnaDetalle}>
             <p>Selecciona un pokemon y aquí se mostrarán los detalles.</p>
           </Col>
         )}
@@ -239,8 +249,8 @@ const Pokedex = ({
           />
         ) : null}
       </Row>
-      <Row className="mt-5">
-        <Col xs="auto">
+      <Row className="mt-5 justify-content-center">
+        <Col xs="auto" md={6}>
           <TablaResumen allPokemon={allPokemon} />
         </Col>
       </Row>

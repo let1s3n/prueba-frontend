@@ -1,17 +1,44 @@
 @import '@/sass/abstracts/variables';
 @import 'bootstrap/scss/mixins';
 
+.pokedexContainer {
+  z-index: 5;
+  overflow-x: hidden;
+}
+
+.mainTable {
+  position: relative;
+  z-index: 5;
+}
+
 .columnaDetalle {
-  height: 800px;
+  height: auto;
   overflow: auto;
+  max-width: 100%;
+  @include media-breakpoint-up(md) {
+    height: 800px;
+  }
 }
 .customRow {
   margin-top: 8rem;
+  justify-content: space-between;
 }
 
 .tableParagraph {
   white-space: pre-line;
+  max-width: 100%;
+  overflow: auto;
   span {
     font-weight: bold;
+  }
+}
+
+.imagenPokemon {
+  position: absolute;
+  opacity: 0.2;
+  z-index: 1;
+  &--pikachu {
+    top: -15%;
+    left: -20px;
   }
 }

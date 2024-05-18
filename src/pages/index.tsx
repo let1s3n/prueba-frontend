@@ -1,27 +1,21 @@
 import React from 'react';
 import Home from '@/components/templates/Home/home';
 import Head from 'next/head';
-import { GetServerSideProps, GetStaticProps } from 'next';
-import { Pokemon, PokemonSelected } from '@/types/generalProps';
+import { GetStaticProps } from 'next';
+import { Pokemon } from '@/types/generalProps';
 
-const index = ({
-  allPokemon,
-}: {
-  allPokemon: Pokemon[];
-}) => {
+const index = ({ allPokemon }: { allPokemon: Pokemon[] }) => {
   return (
     <>
       <Head>
         <title>Defontana | Prueba Frontend</title>
       </Head>
-      <Home
-        allPokemon={allPokemon}
-      />
+      <Home allPokemon={allPokemon} />
     </>
   );
 };
 
-export const getStaticProps = (async (context) => {
+export const getStaticProps = (async () => {
   const allPokemon = await fetch(
     'https://pokeapi.co/api/v2/pokemon?limit=1302'
   );

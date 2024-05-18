@@ -1,4 +1,4 @@
-/* h1,
+h1,
 h2,
 h3,
 h4,
@@ -12,5 +12,31 @@ ol,
 ul,
 dl {
   margin: 0px;
-} */
+}
 
+table {
+  tr {
+    text-align: center;
+  }
+}
+
+//Scroll bar personalizado
+::-webkit-scrollbar {
+  width: 10px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+//

@@ -1,0 +1,24 @@
+@import '@/sass/abstracts/variables';
+@import 'bootstrap/scss/mixins';
+
+.imagen {
+  /* width: 200px; */
+  position: absolute;
+  opacity: 0.2;
+  &--pikachu {
+    top: 0px;
+    left: 0px;
+  }
+  &--bulbasaur {
+    bottom: 0px;
+    right: 0px;
+  }
+  &--squirtle {
+    bottom: 0px;
+    left: 0px;
+  }
+  &--charmander {
+    top: 0px;
+    right: 0px;
+  }
+}
