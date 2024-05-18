@@ -4,27 +4,67 @@ import { Pokemon, PokemonSelected } from '@/types/generalProps';
 import CustomPagination from '@/components/modules/CustomPagination/CustomPagination';
 import Image from 'next/image';
 import TablaResumen from '@/components/modules/TablaResumen/TablaResumen';
+import SearchBar from '@/components/elements/SearchBar/SearchBar';
 import styles from './Pokedex.module.scss';
 const Pokedex = ({
   limit = 20,
-  paginatedPokemonList,
   allPokemon,
 }: {
   limit: number;
-  paginatedPokemonList: Pokemon[];
   allPokemon: Pokemon[];
 }) => {
   const [pokemonSelected, setPokemonSelected] = useState<PokemonSelected>();
   const [currentPage, setCurrentPage] = useState(0);
-  const [currentPageData, setCurrentPageData] = useState(paginatedPokemonList);
+  const [currentPageData, setCurrentPageData] = useState(
+    allPokemon.slice(0, limit)
+  );
+  const [searchTerm, setSearchTerm] = useState('');
+  const [newDataSet, setNewDataSet] = useState<Pokemon[]>();
+  const [newDataSetLength, setNewDataSetLength] = useState(0);
 
   useEffect(() => {
-    const newData: Pokemon[] = allPokemon.slice(
-      currentPage * limit,
-      currentPage * limit + limit
-    );
-    setCurrentPageData(newData);
-  }, [currentPage]);
+    if (searchTerm === '') {
+      const newDataChunk: Pokemon[] = allPokemon.slice(
+        currentPage * limit,
+        currentPage * limit + limit
+      );
+      setCurrentPageData(newDataChunk);
+    } else {
+      if (newDataSetLength > 20) {
+        if (newDataSet) {
+          let newDataChunk: Pokemon[] = newDataSet?.slice(
+            currentPage * limit,
+            currentPage * limit + limit
+          );
+          setCurrentPageData(newDataChunk);
+        }
+      }
+    }
+  }, [currentPage, searchTerm]);
+
+  useEffect(() => {
+    setCurrentPage(0);
+    if (searchTerm !== '') {
+      let newDataChunk: Pokemon[];
+      const newDataSet = allPokemon.filter((pokemon) =>
+        pokemon.name.includes(searchTerm)
+      );
+
+      setNewDataSetLength(newDataSet.length);
+      setNewDataSet(newDataSet);
+      if (newDataSet.length > 20) {
+        newDataChunk = newDataSet.slice(
+          currentPage * limit,
+          currentPage * limit + limit
+        );
+        setCurrentPageData(newDataChunk);
+      } else {
+        setCurrentPageData(newDataSet);
+      }
+    } else {
+      setNewDataSetLength(0);
+    }
+  }, [searchTerm]);
 
   const handlePokemonSelection = async (pokemonName: string) => {
     let res = await (
@@ -35,7 +75,10 @@ const Pokedex = ({
 
   return (
     <Container className="pt-5">
-      <Row className="column-gap-5">
+      <Row>
+        <SearchBar setSearchTerm={setSearchTerm} />
+      </Row>
+      <Row className="mt-5 column-gap-5">
         <Col className="pt-5">
           <Table hover size="sm">
             <thead>
@@ -192,11 +235,21 @@ const Pokedex = ({
         )}
       </Row>
       <Row className="mt-5">
-        <CustomPagination
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          total={Math.ceil(allPokemon.length / limit) - 1}
-        />
+        {newDataSetLength > 0 ? (
+          newDataSetLength > 20 ? (
+            <CustomPagination
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+              total={Math.ceil(newDataSetLength / limit) - 1}
+            />
+          ) : null
+        ) : allPokemon.length > 20 ? (
+          <CustomPagination
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            total={Math.ceil(allPokemon.length / limit) - 1}
+          />
+        ) : null}
       </Row>
       <Row className="mt-5">
         <Col xs="auto">

@@ -1,6 +1,5 @@
 export type Pokemon = { name: string; url: string };
 export type PokemonProps = {
-  paginatedPokemonList: Pokemon[];
   allPokemon: Pokemon[];
 };
 
