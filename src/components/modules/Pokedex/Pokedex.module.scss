@@ -1,0 +1,7 @@
+@import '@/sass/abstracts/variables';
+@import 'bootstrap/scss/mixins';
+
+.columnaDetalle {
+  height: 800px;
+  overflow: auto;
+}

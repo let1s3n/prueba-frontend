@@ -3,7 +3,8 @@ import { Container, Table, Row, Col } from 'react-bootstrap';
 import { Pokemon, PokemonSelected } from '@/types/generalProps';
 import CustomPagination from '@/components/modules/CustomPagination/CustomPagination';
 import Image from 'next/image';
-
+import TablaResumen from '@/components/modules/TablaResumen/TablaResumen';
+import styles from './Pokedex.module.scss';
 const Pokedex = ({
   limit = 20,
   paginatedPokemonList,
@@ -32,15 +33,6 @@ const Pokedex = ({
     setPokemonSelected(res);
   };
 
-  useEffect(() => {
-    console.log('allPokemon length: ', allPokemon.length);
-    console.log('Total: ', Math.ceil(allPokemon.length / limit));
-  }, [allPokemon]);
-
-  useEffect(() => {
-    console.log('paginatedPokemonList: ', paginatedPokemonList);
-  }, [paginatedPokemonList]);
-
   return (
     <Container className="pt-5">
       <Row className="column-gap-5">
@@ -68,7 +60,7 @@ const Pokedex = ({
           </Table>
         </Col>
         {pokemonSelected ? (
-          <Col>
+          <Col className={styles.columnaDetalle}>
             {pokemonSelected?.sprites.front_default ? (
               <Image
                 src={pokemonSelected.sprites.front_default}
@@ -145,7 +137,7 @@ const Pokedex = ({
               `
             )}
           </p> */}
-            <p className="overflow-auto" style={{ height: '150px' }}>
+            <p>
               Movimientos:
               {pokemonSelected?.moves.map(
                 (
@@ -194,46 +186,22 @@ const Pokedex = ({
             </p>
           </Col>
         ) : (
-          <Col>
+          <Col className={styles.columnaDetalle}>
             <p>Selecciona un pokemon y aquí se mostrarán los detalles.</p>
           </Col>
         )}
       </Row>
-      <CustomPagination
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-        total={Math.ceil(allPokemon.length / limit) - 1}
-      />
       <Row className="mt-5">
-        <Table borderless hover size="sm">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Username</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td colSpan={2}>Larry the Bird</td>
-              <td>@twitter</td>
-            </tr>
-          </tbody>
-        </Table>
+        <CustomPagination
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          total={Math.ceil(allPokemon.length / limit) - 1}
+        />
+      </Row>
+      <Row className="mt-5">
+        <Col xs="auto">
+          <TablaResumen allPokemon={allPokemon} />
+        </Col>
       </Row>
     </Container>
   );
