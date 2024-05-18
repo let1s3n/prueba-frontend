@@ -1,6 +1,12 @@
+import { Dispatch, SetStateAction } from 'react';
 import { Pagination } from 'react-bootstrap';
 
-const CustomPagination = ({ currentPage, setCurrentPage, total }: any) => {
+interface CProps {
+  currentPage: number;
+  setCurrentPage: Dispatch<SetStateAction<number>>;
+  total: number;
+}
+const CustomPagination = ({ currentPage, setCurrentPage, total }: CProps) => {
   return (
     <Pagination className="justify-content-center">
       <Pagination.Item onClick={() => setCurrentPage(0)}>

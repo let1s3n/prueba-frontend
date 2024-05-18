@@ -3,21 +3,17 @@
 
 $custom-theme-colors: (
   'desactivado': $desactivado,
-  'gray10': $gray10,
-  'gray60': $gray60,
-  'gray100': $gray100,
-  'neutrals100': $neutrals100,
-  'neutrals200': $neutrals200,
-  'neutrals400': $neutrals400,
-  'neutrals500': $neutrals500,
-  'neutrals600': $neutrals600,
-  'neutrals700': $neutrals700,
-
-  'blueberry600': $blueberry600,
-
-  'red500': $red500,
-
-  'green400': $green400,
+  'fuchsia50': $fuchsia50,
+  'fuchsia100': $fuchsia100,
+  'fuchsia200': $fuchsia200,
+  'fuchsia300': $fuchsia300,
+  'fuchsia400': $fuchsia400,
+  'fuchsia500': $fuchsia500,
+  'fuchsia600': $fuchsia600,
+  'fuchsia700': $fuchsia700,
+  'fuchsia800': $fuchsia800,
+  'fuchsia900': $fuchsia900,
+  'fuchsia950': $fuchsia950,
 );
 
 $theme-colors: map-merge($theme-colors, $custom-theme-colors);

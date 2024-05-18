@@ -5,3 +5,13 @@
   height: 800px;
   overflow: auto;
 }
+.customRow {
+  margin-top: 8rem;
+}
+
+.tableParagraph {
+  white-space: pre-line;
+  span {
+    font-weight: bold;
+  }
+}
