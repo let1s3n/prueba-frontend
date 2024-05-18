@@ -3,7 +3,7 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
-export default function DefaultLayout({ children }: LayoutProps) {
+export default function DefaultLay({ children }: LayoutProps) {
   return (
     <div className="bg-fuchsia50">
       <NavBar />
