@@ -5,7 +5,7 @@ import CustomPagination from '@/components/modules/CustomPagination/CustomPagina
 import Image from 'next/image';
 import TablaResumen from '@/components/modules/TablaResumen/TablaResumen';
 import SearchBar from '@/components/elements/SearchBar/SearchBar';
-import { imageData } from '@/lib/placeholder';
+import { imageData } from '@/utils/placeholder';
 import styles from './Pokedex.module.scss';
 const Pokedex = ({
   limit,
