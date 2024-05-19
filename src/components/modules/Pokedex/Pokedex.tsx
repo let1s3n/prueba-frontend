@@ -22,7 +22,6 @@ const Pokedex = ({
   const [newDataSet, setNewDataSet] = useState<Pokemon[]>(allPokemon);
 
   useEffect(() => {
-    console.log('currentPage: ', currentPage);
     if (searchTerm === '') {
       const newDataChunk: Pokemon[] = newDataSet.slice(
         currentPage * limit,
@@ -151,16 +150,20 @@ const Pokedex = ({
                   className={styles.pokemonSelectedImage}
                   alt="pokemon sprite"
                   width={250}
-                  height={0}
-                  style={{ height: 'auto' }}
+                  height={250}
+                  /* style={{ height: 'auto' }} */
+                  placeholder="blur"
+                  blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFUlEQVR42mM8paHxn4EIwDiqkL4KAU4iFQWlfy8AAAAAAElFTkSuQmCC"
                 />
               ) : pokemonSelected.sprites.front_default ? (
                 <Image
                   src={pokemonSelected.sprites.front_default}
                   alt="pokemon sprite"
                   width={250}
-                  height={0}
-                  style={{ height: 'auto' }}
+                  height={250}
+                  /* style={{ height: 'auto' }} */
+                  placeholder="blur"
+                  blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFUlEQVR42mM8paHxn4EIwDiqkL4KAU4iFQWlfy8AAAAAAElFTkSuQmCC"
                 />
               ) : null}
             </div>
@@ -226,7 +229,7 @@ const Pokedex = ({
                   <div className="d-flex">
                     {pokemonSelected?.forms.map(
                       (form: { name: string; url: string }, idx) => (
-                        <p>
+                        <p key={idx}>
                           {idx + 1}: Name: {form.name},{' '}
                           <a href={form.url} target="_blank">
                             link
@@ -248,7 +251,7 @@ const Pokedex = ({
                         },
                         idx
                       ) => (
-                        <p>
+                        <p key={idx}>
                           {idx + 1}: {moveElem.move.name}
                         </p>
                       )
@@ -268,7 +271,7 @@ const Pokedex = ({
                         },
                         idx
                       ) => (
-                        <p>
+                        <p key={idx}>
                           #{idx + 1}: {statElem.stat.name}
                         </p>
                       )
@@ -286,7 +289,7 @@ const Pokedex = ({
                         },
                         idx
                       ) => (
-                        <p>
+                        <p key={idx}>
                           #{idx + 1}: {typeElem.type.name}
                         </p>
                       )
