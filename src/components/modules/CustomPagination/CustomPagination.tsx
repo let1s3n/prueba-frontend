@@ -64,7 +64,7 @@ const CustomPagination = ({ currentPage, setCurrentPage, total }: CProps) => {
         Siguiente
       </Pagination.Item>
       <Pagination.Item onClick={() => setCurrentPage(total)}>
-        Ultimo
+        Último
       </Pagination.Item>
     </Pagination>
   );

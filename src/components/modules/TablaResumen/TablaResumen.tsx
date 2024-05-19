@@ -1,10 +1,8 @@
 import { Table } from 'react-bootstrap';
 import { Pokemon } from '@/types/generalProps';
 import Image from 'next/image';
-import useWindowDimensions from '@/hooks/useWindowDimensions';
 import styles from './TablaResumen.module.scss';
 const TablaResumen = ({ allPokemon }: { allPokemon: Pokemon[] }) => {
-  const { width, height } = useWindowDimensions();
   const alphabet = [
     'a',
     'b',
@@ -75,7 +73,7 @@ const TablaResumen = ({ allPokemon }: { allPokemon: Pokemon[] }) => {
         alt="Squirtle image"
         width={300}
         height={0}
-        style={{ height: 'auto' }}
+        style={{ width: '300px', height: 'auto' }}
         sizes="(max-width: 768px) 75px, 300px"
       />
       <Image
@@ -86,7 +84,7 @@ const TablaResumen = ({ allPokemon }: { allPokemon: Pokemon[] }) => {
         alt="Charmander image"
         width={300}
         height={0}
-        style={{ height: 'auto' }}
+        style={{ width: '300px', height: 'auto' }}
         sizes="(max-width: 768px) 75px, 300px"
       />
     </div>

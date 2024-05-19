@@ -5,7 +5,7 @@ interface LayoutProps {
 
 export default function DefaultLayout({ children }: LayoutProps) {
   return (
-    <div className="bg-fuchsia50">
+    <div className="bg-persian-blue50">
       <NavBar />
       <main className="main-container position-relative">{children}</main>
     </div>

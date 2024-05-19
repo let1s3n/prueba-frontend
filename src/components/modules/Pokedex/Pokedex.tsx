@@ -22,10 +22,6 @@ const Pokedex = ({
   const [newDataSet, setNewDataSet] = useState<Pokemon[]>(allPokemon);
 
   useEffect(() => {
-    console.log('newDataSetDayana: ', newDataSet);
-  }, [newDataSet]);
-
-  useEffect(() => {
     if (searchTerm === '') {
       const newDataChunk: Pokemon[] = allPokemon.slice(
         currentPage * limit,
@@ -35,20 +31,17 @@ const Pokedex = ({
     } else {
       dividirDataPorPagina(newDataSet);
     }
-  }, [currentPage, searchTerm, newDataSet]);
+  }, [currentPage, searchTerm]);
 
   useEffect(() => {
     setCurrentPage(0);
     if (searchTerm !== '') {
-      const newDataSet = allPokemon.filter((pokemon) =>
-        pokemon.name.includes(searchTerm)
+      setNewDataSet(
+        allPokemon.filter((pokemon) => pokemon.name.includes(searchTerm))
       );
-      if (newDataSet) {
-        setNewDataSet(newDataSet);
-        dividirDataPorPagina(newDataSet);
-      }
-    } else {
-      setNewDataSet([]);
+      dividirDataPorPagina(
+        allPokemon.filter((pokemon) => pokemon.name.includes(searchTerm))
+      );
     }
   }, [searchTerm]);
 
@@ -71,15 +64,39 @@ const Pokedex = ({
   };
 
   return (
-    <Container className={styles.pokedexContainer + ' pt-5 position-relative'}>
+    <Container
+      fluid
+      className={styles.pokedexContainer + ' pt-2 pt-md-5 position-relative'}
+    >
       <Row className="justify-content-center">
-        <Col xs={12} md={3}>
-          <SearchBar newDataSet={newDataSet} setSearchTerm={setSearchTerm} />
+        <Col xs={12} xl={3}>
+          <SearchBar
+            allPokemon={allPokemon}
+            setSearchTerm={setSearchTerm}
+            pokemonSelected={pokemonSelected}
+          />
         </Col>
       </Row>
       <Row className={styles.customRow}>
-        <Col xs={12} md={5} className="pt-5 position-relative">
-          <Table className={styles.mainTable} hover size="sm">
+        <Image
+          className={
+            styles.imagenPokemon + ' ' + styles['imagenPokemon--pikachu']
+          }
+          src="/images/pokemons/pikachuBG2.png"
+          alt="Pikachu image"
+          width={300}
+          height={0}
+          style={{ width: '300px', height: 'auto' }}
+          priority
+        />
+        <div className={styles.blueLed}></div>
+        <div className={styles.semaforo + ' position-absolute'}>
+          <div className={styles.redLed}></div>
+          <div className={styles.yellowLed}></div>
+          <div className={styles.greenLed}></div>
+        </div>
+        <Col xs={12} xl={5} className={styles.columnaGeneral}>
+          <Table variant="dark" className={styles.mainTable} hover size="sm">
             <thead>
               <tr>
                 <th>#</th>
@@ -101,130 +118,152 @@ const Pokedex = ({
               })}
             </tbody>
           </Table>
-          <Image
-            className={
-              styles.imagenPokemon + ' ' + styles['imagenPokemon--pikachu']
-            }
-            src="/images/pokemons/pikachuBG2.png"
-            alt="Pikachu image"
-            width={300}
-            height={0}
-            style={{ height: 'auto' }}
-          />
         </Col>
         {pokemonSelected ? (
-          <Col xs={12} md={6} className={'mt-5 ' + styles.columnaDetalle}>
-            {pokemonSelected?.sprites.front_default ? (
-              <Image
-                src={pokemonSelected.sprites.front_default}
-                alt="pokemon sprite"
-                width={150}
-                height={0}
-                style={{ height: 'auto' }}
-              />
-            ) : null}
+          <Col xs={12} xl={6} className={styles.columnaDetalle}>
+            <div className={styles.pokemonSelectedImageContainer}>
+              {pokemonSelected.sprites.other['official-artwork']
+                .front_default ? (
+                <Image
+                  src={pokemonSelected.sprites.front_default}
+                  alt="pokemon sprite"
+                  width={150}
+                  height={0}
+                  style={{ height: 'auto' }}
+                />
+              ) : pokemonSelected.sprites.front_default ? (
+                <Image
+                  src={
+                    pokemonSelected.sprites.other['official-artwork']
+                      .front_default
+                  }
+                  alt="pokemon sprite"
+                  width={150}
+                  height={0}
+                  style={{ height: 'auto' }}
+                />
+              ) : null}
+            </div>
+            <div className="px-3">
+              <h4 className="py-4 fw-bold">Datos Generales</h4>
+              <p className={styles.tableParagraph}>
+                <span>ID:</span> {pokemonSelected?.id}
+              </p>
+              <p className={styles.tableParagraph}>
+                <span>Orden:</span> {pokemonSelected?.order}
+              </p>
+              <p className={styles.tableParagraph}>
+                <span>Nombre:</span> {pokemonSelected?.name}
+              </p>
+              <p className={styles.tableParagraph}>
+                <span>Experiencia Base:</span>{' '}
+                {pokemonSelected?.base_experience}
+              </p>
+              <p className={styles.tableParagraph}>
+                <span>Altura:</span> {pokemonSelected?.height}
+              </p>
+              <p className={styles.tableParagraph}>
+                <span>Peso:</span> {pokemonSelected?.weight}
+              </p>
 
-            <p className={styles.tableParagraph}>
-              <span>ID:</span> {pokemonSelected?.id}
-            </p>
-            <p className={styles.tableParagraph}>
-              <span>Orden:</span> {pokemonSelected?.order}
-            </p>
-            <p className={styles.tableParagraph}>
-              <span>Nombre:</span> {pokemonSelected?.name}
-            </p>
-            <p className={styles.tableParagraph}>
-              <span>Experiencia Base:</span> {pokemonSelected?.base_experience}
-            </p>
-            <p className={styles.tableParagraph}>
-              <span>Altura:</span> {pokemonSelected?.height}
-            </p>
-            <p className={styles.tableParagraph}>
-              <span>Peso:</span> {pokemonSelected?.weight}
-            </p>
-            <p className={styles.tableParagraph}>
-              <span>Ubicación:</span>
+              <h5 className="py-4 fw-bold">Otros</h5>
+              <p className={styles.tableParagraph}>
+                <span>Ubicación:</span>
 
-              {`
+                {`
               - ${pokemonSelected?.location_area_encounters}
               `}
-            </p>
-            <p className={styles.tableParagraph}>
-              <span className="fw-bold">Habilidades:</span>
-              {pokemonSelected?.abilities.map(
-                (ability: { ability: { name: string } }) => {
-                  return `
+              </p>
+              <p className={styles.tableParagraph}>
+                <span className="fw-bold">Habilidades:</span>
+                {pokemonSelected?.abilities.map(
+                  (ability: { ability: { name: string } }) => {
+                    return `
                   - ${ability.ability.name} `;
-                }
-              )}
-            </p>
-            <p className={styles.tableParagraph}>
-              <span className="fw-bold">Sonidos:</span>
+                  }
+                )}
+              </p>
+              <p className={styles.tableParagraph}>
+                <span className="fw-bold">Sonidos:</span>
 
-              {` 
+                {` 
             - latest: ${pokemonSelected?.cries.latest}
             -legacy: ${pokemonSelected?.cries.legacy}
             `}
-            </p>
-            <p className={styles.tableParagraph}>
-              <span className="fw-bold">Formas:</span>
+              </p>
+              <p className={styles.tableParagraph}>
+                <span className="fw-bold">Formas:</span>
+                <div className="d-flex">
+                  {pokemonSelected?.forms.map(
+                    (form: { name: string; url: string }, idx) => (
+                      <p>
+                        #{idx + 1}: Name: {form.name}, URL: {form.url}
+                      </p>
+                    )
+                  )}
+                </div>
+              </p>
 
-              {pokemonSelected?.forms.map(
-                (form: { name: string; url: string }, idx) =>
-                  `
-                #${idx + 1}: 
-              Name: ${form.name},
-              URL: ${form.url} `
-              )}
-            </p>
+              <div className={styles.tableParagraph}>
+                <span className="fw-bold">Movimientos:</span>
+                <div className="d-flex">
+                  {pokemonSelected?.moves.map(
+                    (
+                      moveElem: {
+                        move: { name: string; url: string };
+                        version_group_details: [];
+                      },
+                      idx
+                    ) => (
+                      <p>
+                        #{idx + 1}: {moveElem.move.name}
+                      </p>
+                    )
+                  )}
+                </div>
+              </div>
 
-            <p className={styles.tableParagraph}>
-              <span className="fw-bold">Movimientos:</span>
-              {pokemonSelected?.moves.map(
-                (
-                  moveElem: {
-                    move: { name: string; url: string };
-                    version_group_details: [];
-                  },
-                  idx
-                ) =>
-                  `
-                  #${idx + 1}: ${moveElem.move.name}`
-              )}
-            </p>
-
-            <p className={styles.tableParagraph}>
-              <span className="fw-bold">Estadísticas:</span>
-              {pokemonSelected?.stats.map(
-                (
-                  statElem: {
-                    base_stat: number;
-                    effort: number;
-                    stat: { name: string; url: string };
-                  },
-                  idx
-                ) =>
-                  `
-                  #${idx + 1}: ${statElem.stat.name} `
-              )}
-            </p>
-            <p className={styles.tableParagraph}>
-              <span className="fw-bold">Tipos:</span>
-              {pokemonSelected?.types.map(
-                (
-                  typeElem: {
-                    slot: number;
-                    type: { name: string; url: string };
-                  },
-                  idx
-                ) =>
-                  `
-                  #${idx + 1}: ${typeElem.type.name} `
-              )}
-            </p>
+              <p className={styles.tableParagraph}>
+                <span className="fw-bold">Estadísticas:</span>
+                <div className="d-flex">
+                  {pokemonSelected?.stats.map(
+                    (
+                      statElem: {
+                        base_stat: number;
+                        effort: number;
+                        stat: { name: string; url: string };
+                      },
+                      idx
+                    ) => (
+                      <p>
+                        #{idx + 1}: {statElem.stat.name}
+                      </p>
+                    )
+                  )}
+                </div>
+              </p>
+              <p className={styles.tableParagraph}>
+                <span className="fw-bold">Tipos:</span>
+                <div className="d-flex">
+                  {pokemonSelected?.types.map(
+                    (
+                      typeElem: {
+                        slot: number;
+                        type: { name: string; url: string };
+                      },
+                      idx
+                    ) => (
+                      <p>
+                        #{idx + 1}: {typeElem.type.name}
+                      </p>
+                    )
+                  )}
+                </div>
+              </p>
+            </div>
           </Col>
         ) : (
-          <Col xs={12} md={6} className={'mt-5 ' + styles.columnaDetalle}>
+          <Col xs={12} xl={6} className={styles.columnaDetalle + ' p-0'}>
             <p>Selecciona un pokemon y aquí se mostrarán los detalles.</p>
           </Col>
         )}

@@ -20,7 +20,12 @@ export type PokemonSelected = {
   past_abilities: [];
   past_types: [];
   species: {};
-  sprites: { front_default: string };
+  sprites: {
+    front_default: string;
+    other: {
+      ['official-artwork']: { front_default: string; front_shiny: string };
+    };
+  };
   stats: [];
   types: [];
   weight: number;

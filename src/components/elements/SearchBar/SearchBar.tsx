@@ -5,40 +5,39 @@ import {
   useEffect,
   useState,
 } from 'react';
-import { Pokemon } from '@/types/generalProps';
+import { PokemonSelected, Pokemon } from '@/types/generalProps';
 import { Form } from 'react-bootstrap';
+import useOnlyLetters from '@/hooks/useOnlyLetters';
 import styles from './SearchBar.module.scss';
 const SearchBar = ({
-  newDataSet,
+  allPokemon,
   setSearchTerm,
+  pokemonSelected,
 }: {
-  newDataSet: Pokemon[];
+  allPokemon: Pokemon[];
   setSearchTerm: Dispatch<SetStateAction<string>>;
+  pokemonSelected: PokemonSelected | undefined;
 }) => {
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [searchInputValue, setSearchInputValue] = useState('');
 
   useEffect(() => {
     setSearchTerm(searchInputValue.toLowerCase());
-
-    if (searchInputValue !== '' && newDataSet.length > 0) {
-      console.log('searchInputValue: ', searchInputValue);
-      console.log('newDataSet:', newDataSet);
-      let res = newDataSet.filter((item: Pokemon) =>
+    if (searchInputValue !== '') {
+      let res = allPokemon.filter((item: Pokemon) =>
         item.name.startsWith(searchInputValue)
       );
-
       setSuggestions(res.map((item) => item.name));
     } else {
-      console.log('searchInputValue2: ', searchInputValue);
-      console.log('newDataSet2:', newDataSet);
       setSuggestions([]);
     }
   }, [searchInputValue]);
 
   useEffect(() => {
-    console.log('suggestions: ', suggestions);
-  }, [suggestions]);
+    if (pokemonSelected) {
+      setSuggestions([]);
+    }
+  }, [pokemonSelected]);
 
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchInputValue(e.target.value.toLowerCase());
@@ -48,8 +47,9 @@ const SearchBar = ({
     setSearchInputValue(s.toLowerCase());
     setSuggestions([]);
   };
+
   return (
-    <div className="position-relative">
+    <div className={styles.searchBarContainer}>
       <Form.Label htmlFor="inputSearch" className="fw-bold">
         Busca un pokemon:
       </Form.Label>
@@ -58,6 +58,8 @@ const SearchBar = ({
         id="inputSearch"
         onChange={handleSearch}
         value={searchInputValue}
+        placeholder="Ingresa el nombre del pokemon"
+        onKeyDown={(e) => useOnlyLetters(e)}
       />
 
       {suggestions.length > 0 ? (
