@@ -225,7 +225,7 @@ const Pokedex = ({
                     legacy
                   </a>
                 </p>
-                <p className={styles.tableParagraph}>
+                <div className={styles.tableParagraph}>
                   <span className="fw-bold">Formas:</span>
                   <div className="d-flex">
                     {pokemonSelected?.forms.map(
@@ -239,7 +239,7 @@ const Pokedex = ({
                       )
                     )}
                   </div>
-                </p>
+                </div>
 
                 <div className={styles.tableParagraph}>
                   <span className="fw-bold">Movimientos:</span>
@@ -260,7 +260,7 @@ const Pokedex = ({
                   </div>
                 </div>
 
-                <p className={styles.tableParagraph}>
+                <div className={styles.tableParagraph}>
                   <span className="fw-bold">Estadísticas:</span>
                   <div className="d-flex">
                     {pokemonSelected?.stats.map(
@@ -278,8 +278,8 @@ const Pokedex = ({
                       )
                     )}
                   </div>
-                </p>
-                <p className={styles.tableParagraph}>
+                </div>
+                <div className={styles.tableParagraph}>
                   <span className="fw-bold">Tipos:</span>
                   <div className="d-flex">
                     {pokemonSelected?.types.map(
@@ -296,7 +296,7 @@ const Pokedex = ({
                       )
                     )}
                   </div>
-                </p>
+                </div>
               </div>
             </div>
           </Col>

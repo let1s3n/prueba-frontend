@@ -1,5 +1,6 @@
 import {
   ChangeEvent,
+  KeyboardEvent,
   Dispatch,
   SetStateAction,
   useEffect,
@@ -59,7 +60,7 @@ const SearchBar = ({
         onChange={handleSearch}
         value={searchInputValue}
         placeholder="Ingresa el nombre del pokemon"
-        onKeyDown={(e) => useOnlyLetters(e)}
+        onKeyDown={(e: KeyboardEvent<HTMLInputElement>) => useOnlyLetters(e)}
       />
 
       {suggestions.length > 0 ? (
