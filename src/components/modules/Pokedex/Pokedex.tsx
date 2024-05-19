@@ -153,7 +153,7 @@ const Pokedex = ({
                   height={250}
                   /* style={{ height: 'auto' }} */
                   placeholder="blur"
-                  blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFUlEQVR42mM8paHxn4EIwDiqkL4KAU4iFQWlfy8AAAAAAElFTkSuQmCC"
+                  blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mM8aWMzGwAE9QHetVGb3wAAAABJRU5ErkJggg=="
                 />
               ) : pokemonSelected.sprites.front_default ? (
                 <Image
@@ -163,7 +163,7 @@ const Pokedex = ({
                   height={250}
                   /* style={{ height: 'auto' }} */
                   placeholder="blur"
-                  blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFUlEQVR42mM8paHxn4EIwDiqkL4KAU4iFQWlfy8AAAAAAElFTkSuQmCC"
+                  blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mM8aWMzGwAE9QHetVGb3wAAAABJRU5ErkJggg=="
                 />
               ) : null}
             </div>
