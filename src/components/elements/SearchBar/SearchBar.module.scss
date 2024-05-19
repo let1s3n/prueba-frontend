@@ -3,14 +3,19 @@
 
 .suggestionBox {
   height: auto;
-  max-height: 150px;
-  width: 300px;
+
+  /* width: 300px; */
+  max-height: 100px;
+  width: 100%;
   background-color: $white;
   overflow: auto;
   position: absolute;
   top: 100%;
   left: 0px;
   z-index: 500;
+  @include media-breakpoint-up(xl) {
+    max-height: 150px;
+  }
 }
 
 .suggestion {
@@ -20,4 +25,14 @@
 .searchBarContainer {
   position: relative;
   z-index: 1000;
+}
+
+.botonCerrar {
+  position: absolute;
+  top: 0.5rem;
+  right: 1rem;
+  font-size: 1rem;
+  line-height: 1;
+  font-weight: bold;
+  cursor: pointer;
 }

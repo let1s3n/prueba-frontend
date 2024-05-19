@@ -64,6 +64,14 @@ const SearchBar = ({
 
       {suggestions.length > 0 ? (
         <div className={styles.suggestionBox}>
+          <div
+            className={styles.botonCerrar}
+            onClick={() => {
+              setSuggestions([]);
+            }}
+          >
+            x
+          </div>
           <p className="fw-bold">Sugerencias: </p>
           {suggestions.map((suggestion, idx) => (
             <p

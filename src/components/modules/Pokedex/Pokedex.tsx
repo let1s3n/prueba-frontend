@@ -7,7 +7,7 @@ import TablaResumen from '@/components/modules/TablaResumen/TablaResumen';
 import SearchBar from '@/components/elements/SearchBar/SearchBar';
 import styles from './Pokedex.module.scss';
 const Pokedex = ({
-  limit = 20,
+  limit,
   allPokemon,
 }: {
   limit: number;
@@ -46,7 +46,7 @@ const Pokedex = ({
   }, [searchTerm]);
 
   const dividirDataPorPagina = (newDataSet: any) => {
-    if (newDataSet.length > 20) {
+    if (newDataSet.length > limit) {
       let newDataChunk: Pokemon[] = newDataSet.slice(
         currentPage * limit,
         currentPage * limit + limit
@@ -297,14 +297,14 @@ const Pokedex = ({
       </Row>
       <Row className="mt-5">
         {newDataSet.length > 0 ? (
-          newDataSet.length > 20 ? (
+          newDataSet.length > limit ? (
             <CustomPagination
               currentPage={currentPage}
               setCurrentPage={setCurrentPage}
               total={Math.ceil(newDataSet.length / limit) - 1}
             />
           ) : null
-        ) : allPokemon.length > 20 ? (
+        ) : allPokemon.length > limit ? (
           <CustomPagination
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
