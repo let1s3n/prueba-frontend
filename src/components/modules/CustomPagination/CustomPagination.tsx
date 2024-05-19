@@ -7,7 +7,7 @@ interface CProps {
   total: number;
 }
 const CustomPagination = ({ currentPage, setCurrentPage, total }: CProps) => {
-  const { width, height } = useWindowDimensions();
+  const { width } = useWindowDimensions();
   return (
     <Pagination className="justify-content-center">
       <Pagination.Item onClick={() => setCurrentPage(0)}>

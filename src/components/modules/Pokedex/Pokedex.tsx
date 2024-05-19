@@ -22,8 +22,9 @@ const Pokedex = ({
   const [newDataSet, setNewDataSet] = useState<Pokemon[]>(allPokemon);
 
   useEffect(() => {
+    console.log('currentPage: ', currentPage);
     if (searchTerm === '') {
-      const newDataChunk: Pokemon[] = allPokemon.slice(
+      const newDataChunk: Pokemon[] = newDataSet.slice(
         currentPage * limit,
         currentPage * limit + limit
       );
@@ -35,13 +36,14 @@ const Pokedex = ({
 
   useEffect(() => {
     setCurrentPage(0);
+    let data = allPokemon.filter((pokemon) =>
+      pokemon.name.includes(searchTerm)
+    );
     if (searchTerm !== '') {
-      setNewDataSet(
-        allPokemon.filter((pokemon) => pokemon.name.includes(searchTerm))
-      );
-      dividirDataPorPagina(
-        allPokemon.filter((pokemon) => pokemon.name.includes(searchTerm))
-      );
+      setNewDataSet(data);
+      dividirDataPorPagina(data);
+    } else {
+      setNewDataSet(allPokemon);
     }
   }, [searchTerm]);
 
@@ -57,10 +59,14 @@ const Pokedex = ({
     }
   };
   const handlePokemonSelection = async (pokemonName: string) => {
-    let res = await (
-      await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`)
-    ).json();
-    setPokemonSelected(res);
+    try {
+      let res = await (
+        await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`)
+      ).json();
+      setPokemonSelected(res);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -106,7 +112,7 @@ const Pokedex = ({
           <div className={styles.yellowLed}></div>
           <div className={styles.greenLed}></div>
         </div>
-        <Col xs={12} xl={5} className={styles.columnaGeneral + " g-0"}>
+        <Col xs={12} xl={5} className={styles.columnaGeneral + ' g-0'}>
           <div className={styles.fondoTabla}>
             <Table variant="dark" className={styles.mainTable} hover size="sm">
               <thead>
@@ -138,7 +144,10 @@ const Pokedex = ({
               {pokemonSelected.sprites.other['official-artwork']
                 .front_default ? (
                 <Image
-                  src={pokemonSelected.sprites.front_default}
+                  src={
+                    pokemonSelected.sprites.other['official-artwork']
+                      .front_default
+                  }
                   className={styles.pokemonSelectedImage}
                   alt="pokemon sprite"
                   width={250}
@@ -147,10 +156,7 @@ const Pokedex = ({
                 />
               ) : pokemonSelected.sprites.front_default ? (
                 <Image
-                  src={
-                    pokemonSelected.sprites.other['official-artwork']
-                      .front_default
-                  }
+                  src={pokemonSelected.sprites.front_default}
                   alt="pokemon sprite"
                   width={250}
                   height={0}
@@ -202,6 +208,7 @@ const Pokedex = ({
                     }
                   )}
                 </p>
+
                 <p className={styles.tableParagraph}>
                   <span className="fw-bold">Sonidos:</span>
                   <br />
@@ -296,19 +303,11 @@ const Pokedex = ({
         )}
       </Row>
       <Row className="mt-5">
-        {newDataSet.length > 0 ? (
-          newDataSet.length > limit ? (
-            <CustomPagination
-              currentPage={currentPage}
-              setCurrentPage={setCurrentPage}
-              total={Math.ceil(newDataSet.length / limit) - 1}
-            />
-          ) : null
-        ) : allPokemon.length > limit ? (
+        {newDataSet.length > limit ? (
           <CustomPagination
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
-            total={Math.ceil(allPokemon.length / limit) - 1}
+            total={Math.ceil(newDataSet.length / limit) - 1}
           />
         ) : null}
       </Row>
