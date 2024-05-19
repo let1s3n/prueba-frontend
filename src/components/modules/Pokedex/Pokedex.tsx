@@ -79,6 +79,16 @@ const Pokedex = ({
       </Row>
       <Row className={styles.customRow}>
         <div className={styles.divider}></div>
+
+        <div className={styles.blackCross}>
+          <p>+</p>
+          <div className={styles.whiteDot}></div>
+        </div>
+        <div className={styles.greenBox}></div>
+        <div className={styles.blackButton}></div>
+        <div className={styles.redEllipse + ' rounded-pill'}></div>
+        <div className={styles.blackEllipse + ' rounded-pill'}></div>
+
         <Image
           className={
             styles.imagenPokemon + ' ' + styles['imagenPokemon--pikachu']
@@ -96,39 +106,42 @@ const Pokedex = ({
           <div className={styles.yellowLed}></div>
           <div className={styles.greenLed}></div>
         </div>
-        <Col xs={12} xl={5} className={styles.columnaGeneral}>
-          <Table variant="dark" className={styles.mainTable} hover size="sm">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Nombre</th>
-              </tr>
-            </thead>
-            <tbody>
-              {currentPageData?.map((pokemon: Pokemon, idx) => {
-                return (
-                  <tr
-                    key={pokemon.name}
-                    onClick={() => handlePokemonSelection(pokemon.name)}
-                    className={styles.mainTableItem}
-                  >
-                    <td>{pokemon.url.slice(34, -1)}</td>
-                    <td>{pokemon.name}</td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </Table>
+        <Col xs={12} xl={5} className={styles.columnaGeneral + " g-0"}>
+          <div className={styles.fondoTabla}>
+            <Table variant="dark" className={styles.mainTable} hover size="sm">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Nombre</th>
+                </tr>
+              </thead>
+              <tbody>
+                {currentPageData?.map((pokemon: Pokemon, idx) => {
+                  return (
+                    <tr
+                      key={pokemon.name}
+                      onClick={() => handlePokemonSelection(pokemon.name)}
+                      className={styles.mainTableItem}
+                    >
+                      <td>{pokemon.url.slice(34, -1)}</td>
+                      <td>{pokemon.name}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </Table>
+          </div>
         </Col>
         {pokemonSelected ? (
-          <Col xs={12} xl={6} className={styles.columnaDetalle + ' g-0'}>
+          <Col xs={12} xl={5} className={styles.columnaDetalle + ' g-0'}>
             <div className={styles.pokemonSelectedImageContainer}>
               {pokemonSelected.sprites.other['official-artwork']
                 .front_default ? (
                 <Image
                   src={pokemonSelected.sprites.front_default}
+                  className={styles.pokemonSelectedImage}
                   alt="pokemon sprite"
-                  width={150}
+                  width={250}
                   height={0}
                   style={{ height: 'auto' }}
                 />
@@ -139,133 +152,146 @@ const Pokedex = ({
                       .front_default
                   }
                   alt="pokemon sprite"
-                  width={150}
+                  width={250}
                   height={0}
                   style={{ height: 'auto' }}
                 />
               ) : null}
             </div>
-            <div className="px-3">
+            <div className="p-3">
               <h4 className="py-4 fw-bold">Datos Generales</h4>
-              <p className={styles.tableParagraph}>
-                <span>ID:</span> {pokemonSelected?.id}
-              </p>
-              <p className={styles.tableParagraph}>
-                <span>Orden:</span> {pokemonSelected?.order}
-              </p>
-              <p className={styles.tableParagraph}>
-                <span>Nombre:</span> {pokemonSelected?.name}
-              </p>
-              <p className={styles.tableParagraph}>
-                <span>Experiencia Base:</span>{' '}
-                {pokemonSelected?.base_experience}
-              </p>
-              <p className={styles.tableParagraph}>
-                <span>Altura:</span> {pokemonSelected?.height}
-              </p>
-              <p className={styles.tableParagraph}>
-                <span>Peso:</span> {pokemonSelected?.weight}
-              </p>
-
-              <h5 className="py-4 fw-bold">Otros</h5>
-              <p className={styles.tableParagraph}>
-                <span>Ubicación:</span>
-
-                {`
-              - ${pokemonSelected?.location_area_encounters}
-              `}
-              </p>
-              <p className={styles.tableParagraph}>
-                <span className="fw-bold">Habilidades:</span>
-                {pokemonSelected?.abilities.map(
-                  (ability: { ability: { name: string } }) => {
-                    return `
-                  - ${ability.ability.name} `;
-                  }
-                )}
-              </p>
-              <p className={styles.tableParagraph}>
-                <span className="fw-bold">Sonidos:</span>
-
-                {` 
-            - latest: ${pokemonSelected?.cries.latest}
-            -legacy: ${pokemonSelected?.cries.legacy}
-            `}
-              </p>
-              <p className={styles.tableParagraph}>
-                <span className="fw-bold">Formas:</span>
-                <div className="d-flex">
-                  {pokemonSelected?.forms.map(
-                    (form: { name: string; url: string }, idx) => (
-                      <p>
-                        #{idx + 1}: Name: {form.name}, URL: {form.url}
-                      </p>
-                    )
-                  )}
-                </div>
-              </p>
-
-              <div className={styles.tableParagraph}>
-                <span className="fw-bold">Movimientos:</span>
-                <div className="d-flex">
-                  {pokemonSelected?.moves.map(
-                    (
-                      moveElem: {
-                        move: { name: string; url: string };
-                        version_group_details: [];
-                      },
-                      idx
-                    ) => (
-                      <p>
-                        #{idx + 1}: {moveElem.move.name}
-                      </p>
-                    )
-                  )}
-                </div>
+              <div className={styles.datosGeneralesContainer}>
+                <p className={styles.tableParagraph}>
+                  <span>ID:</span> {pokemonSelected?.id}
+                </p>
+                <p className={styles.tableParagraph}>
+                  <span>Orden:</span> {pokemonSelected?.order}
+                </p>
+                <p className={styles.tableParagraph}>
+                  <span>Nombre:</span> {pokemonSelected?.name}
+                </p>
+                <p className={styles.tableParagraph}>
+                  <span>Experiencia Base:</span>{' '}
+                  {pokemonSelected?.base_experience}
+                </p>
+                <p className={styles.tableParagraph}>
+                  <span>Altura:</span> {pokemonSelected?.height}
+                </p>
+                <p className={styles.tableParagraph}>
+                  <span>Peso:</span> {pokemonSelected?.weight}
+                </p>
               </div>
+              <h5 className="py-4 fw-bold">Otros</h5>
+              <div className={styles.datosOtrosContainer}>
+                <p className={styles.tableParagraph}>
+                  <span>Ubicación:</span>
+                  <br />
+                  <a
+                    href={pokemonSelected?.location_area_encounters}
+                    target="_blank"
+                  >
+                    Link de ubicación
+                  </a>
+                </p>
+                <p className={styles.tableParagraph}>
+                  <span className="fw-bold">Habilidades:</span>
+                  {pokemonSelected?.abilities.map(
+                    (ability: { ability: { name: string } }) => {
+                      return `
+                  - ${ability.ability.name} `;
+                    }
+                  )}
+                </p>
+                <p className={styles.tableParagraph}>
+                  <span className="fw-bold">Sonidos:</span>
+                  <br />
+                  <a href={`${pokemonSelected?.cries.latest}`} target="_blank">
+                    {' '}
+                    latest
+                  </a>
+                  <br />
+                  <a href={`${pokemonSelected?.cries.legacy}`} target="_blank">
+                    legacy
+                  </a>
+                </p>
+                <p className={styles.tableParagraph}>
+                  <span className="fw-bold">Formas:</span>
+                  <div className="d-flex">
+                    {pokemonSelected?.forms.map(
+                      (form: { name: string; url: string }, idx) => (
+                        <p>
+                          {idx + 1}: Name: {form.name},{' '}
+                          <a href={form.url} target="_blank">
+                            link
+                          </a>
+                        </p>
+                      )
+                    )}
+                  </div>
+                </p>
 
-              <p className={styles.tableParagraph}>
-                <span className="fw-bold">Estadísticas:</span>
-                <div className="d-flex">
-                  {pokemonSelected?.stats.map(
-                    (
-                      statElem: {
-                        base_stat: number;
-                        effort: number;
-                        stat: { name: string; url: string };
-                      },
-                      idx
-                    ) => (
-                      <p>
-                        #{idx + 1}: {statElem.stat.name}
-                      </p>
-                    )
-                  )}
+                <div className={styles.tableParagraph}>
+                  <span className="fw-bold">Movimientos:</span>
+                  <div className={styles.movimientosContainer}>
+                    {pokemonSelected?.moves.map(
+                      (
+                        moveElem: {
+                          move: { name: string; url: string };
+                          version_group_details: [];
+                        },
+                        idx
+                      ) => (
+                        <p>
+                          {idx + 1}: {moveElem.move.name}
+                        </p>
+                      )
+                    )}
+                  </div>
                 </div>
-              </p>
-              <p className={styles.tableParagraph}>
-                <span className="fw-bold">Tipos:</span>
-                <div className="d-flex">
-                  {pokemonSelected?.types.map(
-                    (
-                      typeElem: {
-                        slot: number;
-                        type: { name: string; url: string };
-                      },
-                      idx
-                    ) => (
-                      <p>
-                        #{idx + 1}: {typeElem.type.name}
-                      </p>
-                    )
-                  )}
-                </div>
-              </p>
+
+                <p className={styles.tableParagraph}>
+                  <span className="fw-bold">Estadísticas:</span>
+                  <div className="d-flex">
+                    {pokemonSelected?.stats.map(
+                      (
+                        statElem: {
+                          base_stat: number;
+                          effort: number;
+                          stat: { name: string; url: string };
+                        },
+                        idx
+                      ) => (
+                        <p>
+                          #{idx + 1}: {statElem.stat.name}
+                        </p>
+                      )
+                    )}
+                  </div>
+                </p>
+                <p className={styles.tableParagraph}>
+                  <span className="fw-bold">Tipos:</span>
+                  <div className="d-flex">
+                    {pokemonSelected?.types.map(
+                      (
+                        typeElem: {
+                          slot: number;
+                          type: { name: string; url: string };
+                        },
+                        idx
+                      ) => (
+                        <p>
+                          #{idx + 1}: {typeElem.type.name}
+                        </p>
+                      )
+                    )}
+                  </div>
+                </p>
+              </div>
             </div>
           </Col>
         ) : (
-          <Col xs={12} xl={6} className={styles.columnaDetalle + ' g-0 p-5'}>
-            <h2>Buscando...</h2>
+          <Col xs={12} xl={5} className={styles.columnaDetalle + ' g-0 p-5'}>
+            <h2>Selecciona un pokemon...</h2>
           </Col>
         )}
       </Row>
