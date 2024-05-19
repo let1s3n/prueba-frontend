@@ -78,6 +78,7 @@ const Pokedex = ({
         </Col>
       </Row>
       <Row className={styles.customRow}>
+        <div className={styles.divider}></div>
         <Image
           className={
             styles.imagenPokemon + ' ' + styles['imagenPokemon--pikachu']
@@ -120,7 +121,7 @@ const Pokedex = ({
           </Table>
         </Col>
         {pokemonSelected ? (
-          <Col xs={12} xl={6} className={styles.columnaDetalle}>
+          <Col xs={12} xl={6} className={styles.columnaDetalle + ' g-0'}>
             <div className={styles.pokemonSelectedImageContainer}>
               {pokemonSelected.sprites.other['official-artwork']
                 .front_default ? (
@@ -263,8 +264,8 @@ const Pokedex = ({
             </div>
           </Col>
         ) : (
-          <Col xs={12} xl={6} className={styles.columnaDetalle + ' p-0'}>
-            <p>Selecciona un pokemon y aquí se mostrarán los detalles.</p>
+          <Col xs={12} xl={6} className={styles.columnaDetalle + ' g-0 p-5'}>
+            <h2>Buscando...</h2>
           </Col>
         )}
       </Row>

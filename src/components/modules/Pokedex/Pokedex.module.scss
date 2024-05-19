@@ -5,7 +5,7 @@
   z-index: 5;
   overflow-x: hidden;
 
-  @include media-breakpoint-up(md) {
+  @include media-breakpoint-up(xl) {
     overflow-x: unset;
     width: 80%;
   }
@@ -60,9 +60,9 @@
   border-radius: 1rem;
   display: flex;
   justify-content: center;
-  @include media-breakpoint-up(md) {
+  /* @include media-breakpoint-up(md) {
     justify-content: flex-start;
-  }
+  } */
 }
 .customRow {
   justify-content: space-between;
@@ -75,7 +75,20 @@
     padding: 8rem;
   }
 }
-
+.divider {
+  padding: 0px;
+  background-color: black;
+  height: 100%;
+  width: 3px;
+  position: absolute;
+  top: 0px;
+  left: 50%;
+  transform: translateX(-2rem);
+  display: none;
+  @include media-breakpoint-up(xl) {
+    display: block;
+  }
+}
 .tableParagraph {
   white-space: pre-line;
 
