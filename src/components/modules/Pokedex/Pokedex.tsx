@@ -5,6 +5,7 @@ import CustomPagination from '@/components/modules/CustomPagination/CustomPagina
 import Image from 'next/image';
 import TablaResumen from '@/components/modules/TablaResumen/TablaResumen';
 import SearchBar from '@/components/elements/SearchBar/SearchBar';
+import { imageData } from '@/lib/placeholder';
 import styles from './Pokedex.module.scss';
 const Pokedex = ({
   limit,
@@ -153,7 +154,7 @@ const Pokedex = ({
                   height={250}
                   /* style={{ height: 'auto' }} */
                   placeholder="blur"
-                  blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mM8aWMzGwAE9QHetVGb3wAAAABJRU5ErkJggg=="
+                  blurDataURL={imageData}
                 />
               ) : pokemonSelected.sprites.front_default ? (
                 <Image
@@ -163,7 +164,7 @@ const Pokedex = ({
                   height={250}
                   /* style={{ height: 'auto' }} */
                   placeholder="blur"
-                  blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mM8aWMzGwAE9QHetVGb3wAAAABJRU5ErkJggg=="
+                  blurDataURL={imageData}
                 />
               ) : null}
             </div>
