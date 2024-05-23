@@ -23,31 +23,22 @@ const Pokedex = ({
   const [newDataSet, setNewDataSet] = useState<Pokemon[]>(allPokemon);
 
   useEffect(() => {
-    if (searchTerm === '') {
-      const newDataChunk: Pokemon[] = newDataSet.slice(
-        currentPage * limit,
-        currentPage * limit + limit
-      );
-      setCurrentPageData(newDataChunk);
-    } else {
-      dividirDataPorPagina(newDataSet);
-    }
-  }, [currentPage, searchTerm]);
+    dividirDataPorPagina(newDataSet);
+  }, [currentPage, newDataSet]);
 
   useEffect(() => {
     setCurrentPage(0);
-    let data = allPokemon.filter((pokemon) =>
-      pokemon.name.includes(searchTerm)
-    );
     if (searchTerm !== '') {
+      let data = allPokemon.filter((pokemon) =>
+        pokemon.name.includes(searchTerm)
+      );
       setNewDataSet(data);
-      dividirDataPorPagina(data);
     } else {
       setNewDataSet(allPokemon);
     }
   }, [searchTerm]);
 
-  const dividirDataPorPagina = (newDataSet: any) => {
+  const dividirDataPorPagina = (newDataSet: Pokemon[]) => {
     if (newDataSet.length > limit) {
       let newDataChunk: Pokemon[] = newDataSet.slice(
         currentPage * limit,
